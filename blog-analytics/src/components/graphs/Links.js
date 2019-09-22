@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Bar, Line, Pie } from "react-chartjs-2";
 
-let dataPoints = [];
-export default class KeywordsChart extends Component {
+export default class Links extends Component {
   constructor(props) {
     super(props);
     this.state = {
       chartData: {
+        type: "pie",
         labels: [],
         datasets: [
           {
@@ -48,33 +48,27 @@ export default class KeywordsChart extends Component {
       }
     };
   }
+
   componentDidUpdate(prevProps) {
     // Typical usage (don't forget to compare props):
-    if (this.props.keywords !== prevProps.keywords) {
-      // console.log(this.props.keywords);
-      let pairs = this.props.keywords;
-      let labels = [];
-      // console.log(pairs);
-      for (var [key, value] of pairs) {
-        labels.push(key);
-        dataPoints.push(value);
-      }
-      // console.log("dataPoints");
-      // console.log(dataPoints);
+    if (this.props.links !== prevProps.links) {
+      console.log("links!");
+      console.log(this.props.links);
+      let dataPoints = this.props.links;
 
-      if (labels) {
+      if (dataPoints) {
         // console.log("labels");
         // console.log(labels);
         this.setState(state => {
           return {
             chartData: {
-              labels: labels,
+              labels: ["Internal", "External"],
               datasets: [
                 {
-                  label: "Word Count",
+                  //   label: "label!",
                   data: dataPoints,
                   fill: true,
-                  backgroundColor: "#d346b1",
+                  backgroundColor: ["#d346b1", "white"],
                   borderColor: "#d346b1",
                   borderWidth: 2,
                   borderDash: [],
@@ -115,21 +109,18 @@ export default class KeywordsChart extends Component {
   }
 
   render() {
-    let { chartData } = this.state;
-    // console.log("labels");
-    // console.log(this.state.chartData.labels);
-    this.state.chartData.datasets.map(x => console.log(x));
-    // console.log("chart data");
-    // console.log(this.state.chartData);
     return (
       <div>
-        <div class="card-body">
-          <div class="chart-area">
-            <Bar
+        <div class="card ">
+          <div class="card-header">
+            <h4 class="card-title">Links Analysis</h4>
+          </div>
+          <div class="card-body">
+            <Pie
               data={this.state.chartData}
-              width={"100%"}
-              height={"100%"}
-              options={{ maintainAspectRatio: false }}
+              // width={"100%"}
+              // height={"100%"}
+              // options={{ maintainAspectRatio: false }}
             />
           </div>
         </div>

@@ -10,7 +10,8 @@ export default class Scraper extends Component {
       rows: ["row 1"],
       url: null,
       keywords: [],
-      badWords: []
+      badWords: [],
+      links: []
     };
     this.addRow = this.addRow.bind(this);
   }
@@ -84,6 +85,13 @@ export default class Scraper extends Component {
                           },
                           body: JSON.stringify(urls)
                         });
+                        let prom3 = await fetch("/links", {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json"
+                          },
+                          body: JSON.stringify(urls)
+                        });
                         prom1.json().then(data =>
                           this.setState(
                             { keywords: data.response },
@@ -99,6 +107,11 @@ export default class Scraper extends Component {
                               this.props.getBadWords(this.state.badWords);
                             }
                           )
+                        );
+                        prom3.json().then(data =>
+                          this.setState({ links: data.response }, function() {
+                            this.props.getLinks(this.state.links);
+                          })
                         );
                       }}
                     >

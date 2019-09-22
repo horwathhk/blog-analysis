@@ -2,13 +2,15 @@ import React, { Component, useEffect, useState } from "react";
 import TopTen from "../graphs/TopTen";
 import Scraper from "../graphs/Scraper";
 import BadWords from "../graphs/BadWords";
+import Links from "../graphs/Links";
 
 export default class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
       keywords: null,
-      badWords: null
+      badWords: null,
+      links: null
     };
   }
 
@@ -20,8 +22,14 @@ export default class Main extends Component {
     this.setState({ badWords: badwords });
   };
 
+  getLinks = links => {
+    this.setState({ links: links });
+  };
+
   render() {
-    let { keywords, badWords } = this.state;
+    let { keywords, badWords, links } = this.state;
+    // console.log("links!");
+    // console.log(this.state.links);
     return (
       <div>
         <body clasnName="">
@@ -267,6 +275,7 @@ export default class Main extends Component {
                   <Scraper
                     getKeywords={this.getKeywords}
                     getBadWords={this.getBadWords}
+                    getLinks={this.getLinks}
                   />
                 </div>
               </div>
@@ -278,6 +287,9 @@ export default class Main extends Component {
               <div class="row">
                 <div class="col-lg-6 col-md-12">
                   <BadWords badWords={badWords} />
+                </div>
+                <div class="col-lg-6 col-md-12">
+                  <Links links={links} />
                 </div>
               </div>
 
